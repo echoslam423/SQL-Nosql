@@ -1,14 +1,14 @@
-mysql约束条件
+⚫mysql约束条件
    条件约束    功能描述
     null     允许为空,默认设置
     not null 不允许为空
     key      索引类型
     default  设置默认值,缺省为 NULL
     
-查看表结构及约束条件
+⚫查看表结构及约束条件
     mysql> desc school.restrict    // 表名.库名
 
-修改表结构(alter table)
+⚫修改表结构(alter table)
     add添加字段
           mysql> alter table school.restrict
             add
@@ -36,4 +36,16 @@ mysql约束条件
     rename 修改字段名称
           mysql> alter table school.restrict rename school.rest;
           
-MySQL 键值        
+⚫MySQL 键值类型
+      INDEX 普通索引
+      UNIQUE 唯一索引
+      FULLTEXT 全文索引
+      PRIMARY KEY 主键
+      FOREIGN KEY 外键
+      
+⚫INDEX 普通索引
+      一个表中可以有多个 INDEX 字段
+      字段的值允许有重复,切可以赋 NULL 值
+      经常把做查询条件的字段设置为 INDEX 字段
+      INDEX 字段的 KEY 标志是 MUL
+      二叉树算法
