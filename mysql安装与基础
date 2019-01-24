@@ -96,3 +96,38 @@
     1 row in set (0.00 sec)
 		注意：若要修改MySQL服务的默认字符集，可以更改服务器的/etc/my.cnf配置文件，添加character_set_server=utf8 配置，然后重启数据库服务。
 
+常用sql命令分类
+	DDL数据定义语言  create alter drop
+	DMC数据操控语言  insert update delete
+	DCL数据控制语言  grant revoke
+	DTL数据事物语言  commit rollback savepoint
+	
+插入表数据
+	mysql>insert into school.student values('NSD181002','蛇精','女',1389999999,'上海'),
+	('NSD181003','爷爷','男',1387777777,'长白山');                // insert 后面可以不加into
+
+查看数据
+	mysql> select * from school.student;     //* 表示表结构的定义列  from 库名.表名
+	
+更新数据
+	mysql>update school.student set 性别='女';
+	mysql>update school.student set 性别='男' where 姓名='葫芦娃';    //where 是条件格式声明 可用在select update delete之后
+	
+删除数据
+	mysql> delete from school.student where 学号='NSD181003';    #删除表中满足条件的数据
+	mysql> delete from school.student;                           #删除表中所有数据
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
