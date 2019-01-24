@@ -1,15 +1,15 @@
-下载mysql-5.7.17
+⚫下载mysql-5.7.17
 		//mysql官网下载：http://dev.mysql.com/downloads/mysql/ 
 		//找到MySQL Community Server下载页面，平台选择“Red Hat Enterprise Linux 7/ Oracle Linux”，然后选择64位的bundle整合包下载
 
-启动查看mysqld服务
+⚫启动查看mysqld服务
 		yum -y install perl-Data-Dumper  perl-JSON  perl-Time-HiRes  //mysql主要依赖包
 		tar -xvf mysql-5.7.17.tar  //解压缩下载软件包
 		systemctl start mysqld                  //启动mysql服务
 		systemctl enable mysqld                 //设置开机自启
 		systemctl status mysqld                 //查看mysql服务状态
 
-登陆mysql，修改初始化密码
+⚫登陆mysql，修改初始化密码
 		grep 'temporary password' /var/log/mysqld.log   //log日志下查找的管理密码
 		mysql -u root -p'mtoa>Av<p6Yk'  //使用查找密码登陆
 		mysql>show databases;
@@ -27,25 +27,25 @@
 		mysql> exit                                  //退出 mysql> 环境
 		mysql -u root -p123456  //使用新密码重新登陆
 
-查看库
+⚫查看库
 		mysql> show  databases;                                //查看现有的库
 
-切换库
+⚫切换库
 		mysql> use sys;                                        //切换库 sys为切换库的库名
 		Database changed
 
-确认当前库
+⚫确认当前库
 		mysql> select database();                            //确认当前所在的库 database()为系统函数
 
-新建库
+⚫新建库
 		mysql> create database newdb;                     //新建名为newdb的库
 		Query OK, 1 row affected (0.00 sec)
 
-删除库
+⚫删除库
 		mysql> drop database newdb;                       //删除名为newdb的库
 		Query OK, 0 rows affected (0.01 sec)
 
-查看表与表结构
+⚫查看表与表结构
 		mysql> use mysql;
 		Database changed
 		
@@ -55,7 +55,7 @@
 		mysql> desc columns_priv;          //查看表结构，以表格形式展现末尾需要有分号
 		mysql> desc mysql.columns_priv;     //查看非当前库的表结构
 
-创建表
+⚫创建表
     mysql> create table pwlist(           //在当前库下创建表，非当前库创建表用 库名.表名 的格式创建
         -> name char(16) not null,        // 表结构名（name） 类型 （字符character) 选项 (非空）
         -> password char(48)default '',    // 设置默认值
@@ -72,14 +72,14 @@
     +----------+----------+------+-----+---------+-------+
     2 rows in set (0.01 sec)
 
-删除表
+⚫删除表
     mysql> drop table pwlist;
     Query OK, 0 rows affected (0.01 sec)
 		
-查看字符集
+⚫查看字符集
     mysql> show character set;             //查看可用字符集 创建库/表时 手动添加“DEFAULT CHARSET=utf8” 支持中文
 		
-查看创建表时指令
+⚫查看创建表时指令
 		mysql> SHOW CREATE TABLE mydb.student;
     +---------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     |Table |Create Table                                                                                                                                                                                                                                                             |
@@ -96,28 +96,28 @@
     1 row in set (0.00 sec)
 		注意：若要修改MySQL服务的默认字符集，可以更改服务器的/etc/my.cnf配置文件，添加character_set_server=utf8 配置，然后重启数据库服务。
 
-常用sql命令分类
+⚫常用sql命令分类
 	DDL数据定义语言  create alter drop
 	DMC数据操控语言  insert update delete
 	DCL数据控制语言  grant revoke
 	DTL数据事物语言  commit rollback savepoint
 	
-插入表数据
+⚫插入表数据
 	mysql>insert into school.student values('NSD181002','蛇精','女',1389999999,'上海'),
 	('NSD181003','爷爷','男',1387777777,'长白山');                // insert 后面可以不加into
 
-查看数据
+⚫查看数据
 	mysql> select * from school.student;     //* 表示表结构的定义列  from 库名.表名
 	
-更新数据
+⚫更新数据
 	mysql>update school.student set 性别='女';
 	mysql>update school.student set 性别='男' where 姓名='葫芦娃';    //where 是条件格式声明 可用在select update delete之后
 	
-删除数据
+⚫删除数据
 	mysql> delete from school.student where 学号='NSD181003';     //删除表中满足条件的数据
 	mysql> delete from school.student;                           //删除表中所有数据
 
-MySQL 数据类型
+⚫MySQL 数据类型
 	数字类型
 		类型       大小    范围(有符号)    范围(无符号)     用途
                 tinyint   1 字节  -128~127       0~255           微小整数
