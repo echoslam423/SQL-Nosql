@@ -120,16 +120,22 @@
     | secure_file_priv   | /myload/ |
     +------------------+----------+
   
-⚫操作表记录
-   删除stu_info表的所有记录
-    mysql> DELETE FROM stu_info;                    
-    Query OK, 0 rows affected (0.00 sec)              
-    
-⚫插入表记录
-    mysql> INSERT stu_info VALUES
-        -> ('Jim','girl',24),
-        -> ('Tom','boy',21),
-        -> ('Lily','girl',20);
-    Query OK, 3 rows affected (0.15 sec)
-    Records: 3  Duplicates: 0  Warnings: 0
+⚫操作表记录             
+      mysql> INSERT stu_info VALUES                   //插入表记录
+          -> ('Jim','girl',24),
+          -> ('Tom','boy',21),
+          -> ('Lily','girl',20);
+      Query OK, 3 rows affected (0.15 sec)
+      Records: 3  Duplicates: 0  Warnings: 0
+      
+      mysql> INSERT INTO stu_info(name,age)          //插入指定字段
+          -> VALUES('Jerry',27);
+      Query OK, 1 row affected (0.04 sec)
+      
+      
+      mysql> DELETE FROM stu_info;
+      Query OK, 0 rows affected (0.00 sec)               //删除表记录 可支持where条件
+      
+      
+⚫
     
