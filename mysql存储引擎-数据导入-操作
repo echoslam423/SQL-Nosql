@@ -121,6 +121,7 @@
     +------------------+----------+
   
 ⚫操作表记录             
+   插入数据
       mysql> INSERT stu_info VALUES                   //插入表记录
           -> ('Jim','girl',24),
           -> ('Tom','boy',21),
@@ -132,10 +133,28 @@
           -> VALUES('Jerry',27);
       Query OK, 1 row affected (0.04 sec)
       
-      
+   删除数据   
       mysql> DELETE FROM stu_info;
       Query OK, 0 rows affected (0.00 sec)               //删除表记录 可支持where条件
       
+   查询数据
+      mysql> SELECT * FROM stu_info;                     //查询数据 支持where条件
       
-⚫
+   修改数据   
+      mysql> UPDATE stu_info SET age=10;
+      Query OK, 5 rows affected (0.04 sec)
+      Rows matched: 5  Changed: 5  Warnings: 0
+            //修改所有列的信息 支持where条件修改单独项
+      
+      mysql> UPDATE stu_info SET age=20
+        -> WHERE gender='boy';
+      Query OK, 3 rows affected (0.04 sec)
+      Rows matched: 3  Changed: 3  Warnings: 0
+   
+⚫查询及匹配条件
+   基本条件
+     数值比较
+   高级条件
+   操作查询结果
+
     
