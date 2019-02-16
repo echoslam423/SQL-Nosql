@@ -153,8 +153,172 @@
    
 ⚫查询及匹配条件
    基本条件
-     数值比较
-   高级条件
-   操作查询结果
-
+   
+   数值比较
+      =,>=,<=,>,<,!=
+      例:数值比较列出stu_info表中年龄为21岁的学员记录：
+       mysql> SELECT * FROM stu_info WHERE age=21;
+          +------+--------+-----+
+          | name | gender | age |
+          +------+--------+-----+
+          | Tom  | boy    |  21 |
+          | Mike | boy    |  21 |
+          +------+--------+-----+
+          2 rows in set (0.00 sec)
+          
+      列出stu_info表中年龄大于或等于21岁的学员记录：
+       mysql> SELECT * FROM stu_info WHERE age>=21;
+          +-------+--------+-----+
+          | name  | gender | age |
+          +-------+--------+-----+
+          | Jim   | girl   |  24 |
+          | Tom   | boy    |  21 |
+          | Jerry | boy    |  27 |
+          | Mike  | boy    |  21 |
+          +-------+--------+-----+
+           4 rows in set (0.00 sec)
     
+    字符串比较
+        =,!=,IS NULL,IS NOT NULL
+    逻辑匹配
+        AND,OR,!,() 提高优先级
+        例:列出stu_info表中年龄小于23岁的女学员记录：
+         mysql> SELECT * FROM stu_info WHERE age < 23 AND gender='girl';
+          +------+--------+-----+
+          | name | gender | age |
+          +------+--------+-----+
+          | Lily | girl   |  20 |
+          +------+--------+-----+
+          1 row in set (0.00 sec)
+    
+    范围内匹配
+        in(值列表) 在...里...
+        not in(值列表) 不在...里...
+        between 数字1 and 数字2 在...之间...
+        distinct 字段名 去重显示                   // 效率低于group by 
+        例:列出stu_info表中年龄在20岁和24岁之间的学员记录：
+          mysql> SELECT * FROM stu_info WHERE age BETWEEN 20 and 24;
+              +------+--------+-----+
+              | name | gender | age |
+              +------+--------+-----+
+              | Jim  | girl   |  24 |
+              | Tom  | boy    |  21 |
+              | Lily | girl   |  20 |
+              | Mike | boy    |  21 |
+              +------+--------+-----+
+              4 rows in set (0.00 sec)
+              
+          mysql> SELECT * FROM stu_info WHERE name IN
+            -> ('Jim','Tom','Mickey','Minnie');
+            +------+--------+-----+
+            | name | gender | age |
+            +------+--------+-----+
+            | Jim  | girl   |  24 |
+            | Tom  | boy    |  21 |
+            +------+--------+-----+
+             2 rows in set (0.00 sec) 
+                 
+   高级条件
+      模糊查询
+        LIKE以下划线 _ 匹配单个字符，% 可匹配任意多个字符。
+        例:列出stu_info表中姓名以“J”开头的学员记录：
+         mysql> SELECT * FROM stu_info WHERE name LIKE 'J%';
+            +-------+--------+-----+
+            | name  | gender | age |
+            +-------+--------+-----+
+            | Jim   | girl   |  24 |
+            | Jerry | boy    |  27 |
+            +-------+--------+-----+
+            2 rows in set (0.00 sec)
+            
+      正则表达式
+        例：列出stu_info表中姓名以“J”开头且以“y”结尾的学员记录：
+          mysql> SELECT * FROM stu_info WHERE name REGEXP '^J.*y$';
+            +-------+--------+-----+
+            | name  | gender | age |
+            +-------+--------+-----+
+            | Jerry | boy    |  27 |
+            +-------+--------+-----+
+            1 row in set (0.00 sec)
+            
+      四则运算
+      使用SELECT做数学计算1234与5678的和：
+         mysql> SELECT 1234+5678;
+            +-----------+
+            | 1234+5678 |
+            +-----------+
+            |      6912 |
+            +-----------+
+            1 row in set (0.00 sec)
+            
+   操作查询结果
+      聚集函数
+        count(),avg(),sum(),min(),max()
+       计算stu_info表中各学员的平均年龄、最大年龄、最小年龄：
+         mysql> SELECT avg(age),max(age),min(age) FROM stu_info;
+            +----------+----------+----------+
+            | avg(age) | max(age) | min(age) |
+            +----------+----------+----------+
+            |  22.6000 |       27 |       20 |
+            +----------+----------+----------+
+            1 row in set (0.00 sec)
+            
+      查询结果排序
+        order by (数值类型字段) [asc(默认值,可不写)|desc] , group by
+        列出stu_info表的所有记录，按年龄排序：
+              mysql> SELECT * FROM stu_info GROUP BY age;
+                +-------+--------+-----+
+                | name  | gender | age |
+                +-------+--------+-----+
+                | Lily  | girl   |  20 |
+                | Tom   | boy    |  21 |
+                | Jim   | girl   |  24 |
+                | Jerry | boy    |  27 |
+                +-------+--------+-----+
+                4 rows in set (0.00 sec)
+            
+          列出查询字段时，可以通过AS关键字来指定显示别名，比如上述操作可改为：           
+              mysql> SELECT gender AS '性别',count(gender) AS '人数'
+              -> FROM stu_info GROUP BY gender;
+                  +--------+--------+
+                  | 性别   | 人数   |
+                  +--------+--------+
+                  | boy    |      3 |
+                  | girl   |      2 |
+                  +--------+--------+
+                  2 rows in set (0.00 sec)            
+          
+                mysql> SELECT gender,count(gender) FROM stu_info GROUP BY gender;
+                    +--------+---------------+
+                    | gender | count(gender) |
+                    +--------+---------------+
+                    | boy    |             3 |
+                    | girl   |             2 |
+                    +--------+---------------+
+                    2 rows in set (0.00 sec)            
+
+      查询结果过滤
+        sql 查询 having 条件表达式;
+        sql 查询 where 条件 having 条件表达式;
+        sql 查询 group by 字段名 having 条件表达式;
+        
+      显示结果显示行数
+            mysql> SELECT * FROM stu_info LIMIT 3;
+              +------+--------+-----+
+              | name | gender | age |
+              +------+--------+-----+
+              | Jim  | girl   |  24 |
+              | Tom  | boy    |  21 |
+              | Lily | girl   |  20 |
+              +------+--------+-----+
+              3 rows in set (0.00 sec)
+              
+             mysql> SELECT * FROM stu_info GROUP BY age DESC LIMIT 3;
+              +-------+--------+-----+
+              | name  | gender | age |
+              +-------+--------+-----+
+              | Jerry | boy    |  27 |
+              | Jim   | girl   |  24 |
+              | Tom   | boy    |  21 |
+              +-------+--------+-----+
+              3 rows in set (0.00 sec)
